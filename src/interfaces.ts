@@ -32,12 +32,6 @@ export interface PexelsPhotoSources {
   tiny: string;
 }
 
-export enum Step {
-  Search,
-  Choise,
-  Result
-}
-
 export interface ImgCard {
   name: string;
   surname: string;
@@ -47,18 +41,11 @@ export interface setImageProps extends ImgCard {
   photos: PexelsPhoto[];
 }
 
-export interface FormProps {
-  setImages: (data: setImageProps) => void;
-}
-
-export interface ChoiseProps {
+export interface ContextType {
   images: PexelsPhoto[];
-  openForm: () => void;
+  selected: PexelsPhoto;
+  setImages: (data: setImageProps) => void;
   onAccept: (index: number) => void;
-}
-
-export interface ResultProps {
   name: string;
   surname: string;
-  image: PexelsPhoto;
 }

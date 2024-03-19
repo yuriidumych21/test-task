@@ -1,14 +1,18 @@
-import { ResultProps } from '../../interfaces';
+import { useContext } from 'react';
+import { Context } from '../../context';
 
-const Result = ({ name, surname, image }: ResultProps) => (
-  <div className='card'>
-    <img className='card-img-top' src={image.src.medium} alt='Selected img' />
-    <div className='card-body'>
-      <p className='card-text'>
-        {name} {surname}
-      </p>
+const Result = () => {
+  const { name, surname, selected } = useContext(Context) || {};
+  return (
+    <div className='card'>
+      <img className='card-img-top' src={selected?.src?.medium} alt='Selected img' />
+      <div className='card-body'>
+        <p className='card-text'>
+          {name} {surname}
+        </p>
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Result;

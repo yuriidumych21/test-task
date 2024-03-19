@@ -1,16 +1,23 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import { ChoiseProps } from '../../interfaces';
+import { useNavigate } from 'react-router-dom';
+import { SEARCH, RESULTS } from '../../contants';
+import { Context } from '../../context';
 
-const Choise = ({ images, openForm, onAccept }: ChoiseProps) => {
+const Choise = () => {
+  const navigate = useNavigate();
+  const { images, onAccept } = useContext(Context) || {};
   const [index, setIndex] = useState(0);
 
   const onReject = () => {
-    if (index === 4) openForm();
+    if (!images?.[index + 1]) navigate(SEARCH);
     else setIndex((prev) => prev + 1);
   };
 
-  const onClickAccept = () => onAccept(index);
+  const onClickAccept = () => {
+    onAccept?.(index);
+    navigate(RESULTS);
+  };
 
   return (
     <div>
@@ -18,7 +25,7 @@ const Choise = ({ images, openForm, onAccept }: ChoiseProps) => {
         Reject
       </Button>
 
-      <img alt='img' src={images[index].src.medium} />
+      <img alt='img' src={images?.[index].src.medium} />
 
       <Button className='mx-2' onClick={onClickAccept}>
         Accept

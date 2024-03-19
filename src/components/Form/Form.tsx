@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { getImages } from '../../api';
-import { FormProps } from '../../interfaces';
 import Spinner from 'react-bootstrap/Spinner';
+import { useNavigate } from 'react-router-dom';
+import { getImages } from '../../api';
+import { Context } from '../../context';
+import { CHOISE } from '../../contants';
 
 export const schema = yup
   .object({
@@ -19,7 +21,10 @@ export const schema = yup
   })
   .required();
 
-const FormComp = ({ setImages }: FormProps) => {
+const FormComp = () => {
+  const { setImages } = useContext(Context) || {};
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -36,7 +41,8 @@ const FormComp = ({ setImages }: FormProps) => {
     setLoading(true);
     const param = topic === 'Other' && customTopic ? customTopic : topic;
     const { photos } = await getImages(param);
-    setImages({ photos, name, surname });
+    setImages?.({ photos, name, surname });
+    navigate(CHOISE);
     setLoading(false);
   };
 
