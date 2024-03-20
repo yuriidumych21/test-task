@@ -4,6 +4,7 @@ import { PexelsPhoto, setImageProps, ImgCard } from './interfaces';
 import Choise from './components/Choise/Choise';
 import Form from './components/Form/Form';
 import Result from './components/Result/Result';
+import NotFound from './components/NotFound/NotFound';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Context } from './context';
 import { SEARCH, CHOISE, RESULTS } from './contants';
@@ -38,6 +39,7 @@ function App() {
               <Route path={CHOISE} element={<Choise />} />
               <Route path={RESULTS} element={<Result />} />
               <Route path={SEARCH} element={<Form />} />
+              <Route path='*' element={<NotFound />} />
             </Routes>
           </BrowserRouter>
         </div>
