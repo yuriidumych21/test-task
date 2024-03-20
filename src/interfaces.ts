@@ -22,14 +22,7 @@ export interface PexelsPhoto {
 }
 
 export interface PexelsPhotoSources {
-  original: string;
-  large: string;
-  large2x: string;
   medium: string;
-  small: string;
-  portrait: string;
-  landscape: string;
-  tiny: string;
 }
 
 export interface ImgCard {
@@ -42,10 +35,10 @@ export interface setImageProps extends ImgCard {
 }
 
 export interface ContextType {
-  images: PexelsPhoto[];
-  selected: PexelsPhoto;
-  setImages: (data: setImageProps) => void;
-  onAccept: (index: number) => void;
-  name: string;
-  surname: string;
+  images?: PexelsPhoto[];
+  selected?: PexelsPhoto;
+  setImages?: (data: setImageProps) => void;
+  onAccept?: (index: number) => void;
+  name?: string;
+  surname?: string;
 }

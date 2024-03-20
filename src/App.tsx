@@ -6,6 +6,7 @@ import Form from './components/Form/Form';
 import Result from './components/Result/Result';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Context } from './context';
+import { SEARCH, CHOISE, RESULTS } from './contants';
 
 function App() {
   const [images, setImages] = useState<PexelsPhoto[]>([]);
@@ -34,9 +35,9 @@ function App() {
         <div className='container main-component'>
           <BrowserRouter>
             <Routes>
-              <Route path='/choise' element={<Choise />} />
-              <Route path='/results' element={<Result />} />
-              <Route path='/' element={<Form />} />
+              <Route path={CHOISE} element={<Choise />} />
+              <Route path={RESULTS} element={<Result />} />
+              <Route path={SEARCH} element={<Form />} />
             </Routes>
           </BrowserRouter>
         </div>
