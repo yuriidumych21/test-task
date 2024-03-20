@@ -16,7 +16,7 @@ function App() {
 
   const onImagesReturned = ({ photos, ...data }: setImageProps) => {
     setImages(photos);
-    setForm(data);
+    setForm(data); // save name and surname to context
   };
 
   const onAccept = (index: number) => setSelected(index);

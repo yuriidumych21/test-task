@@ -4,6 +4,7 @@ import { PexelsApiResponse } from './interfaces';
 export const getImages = async (topic: string): Promise<PexelsApiResponse> => {
   const response = await axios.get<PexelsApiResponse>(`https://api.pexels.com/v1/search`, {
     headers: {
+      //personal api key from pexels.com/api/new
       Authorization: process.env.REACT_APP_PEXELS_API_KEY
     },
     params: { query: topic, per_page: 5 }

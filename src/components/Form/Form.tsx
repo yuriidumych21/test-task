@@ -14,6 +14,7 @@ export const schema = yup
     name: yup.string().trim().max(20, 'Must be not more then 20 characters').required('Required'),
     surname: yup.string().trim().max(20, 'Must be not more then 20 characters').required('Required'),
     topic: yup.string().required('Required'),
+    //custom topic field becomes required only in case Other is selected in previous field
     customTopic: yup.string().when('topic', ([topic], schema) => {
       if (topic === 'Other') return schema.required('Required');
       return schema;
@@ -42,6 +43,7 @@ const FormComp = () => {
     const param = topic === 'Other' && customTopic ? customTopic : topic;
     const { photos } = await getImages(param);
     setImages?.({ photos, name, surname });
+    //redirect user to the next step
     navigate(CHOISE);
     setLoading(false);
   };
