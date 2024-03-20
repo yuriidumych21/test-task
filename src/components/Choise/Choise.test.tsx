@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import { Context } from '../../context';
@@ -7,7 +7,6 @@ import { ContextType } from '../../interfaces';
 import Choice from './Choise';
 import { useNavigate } from 'react-router-dom';
 import { SEARCH, RESULTS, images } from '../../contants';
-import { act } from 'react-dom/test-utils';
 
 const mockNavigate = jest.fn();
 
@@ -47,22 +46,20 @@ describe('Choice Component', () => {
       onAccept: jest.fn()
     };
     renderWithProviders(<Choice />, { providerProps });
-    act(() => {
-      userEvent.click(screen.getByRole('button', { name: 'Reject' }));
-    });
+    userEvent.click(screen.getByRole('button', { name: 'Reject' }));
     expect(mockNavigate).toHaveBeenCalledWith(SEARCH);
   });
 
-  it('increments the index on reject when there are more images', () => {
+  it('increments the index on reject when there are more images', async () => {
     const providerProps: ContextType = {
       images,
       onAccept: jest.fn()
     };
     renderWithProviders(<Choice />, { providerProps });
-    act(() => {
-      userEvent.click(screen.getByRole('button', { name: 'Reject' }));
+    userEvent.click(screen.getByRole('button', { name: 'Reject' }));
+    await waitFor(() => {
+      expect(screen.getByAltText('img')).toHaveAttribute('src', images[1].src.medium);
     });
-    expect(screen.getByAltText('img')).toHaveAttribute('src', images[1].src.medium);
   });
 
   it('calls onAccept and navigates to results on accept', () => {
@@ -72,9 +69,7 @@ describe('Choice Component', () => {
       onAccept: onAcceptMock
     };
     renderWithProviders(<Choice />, { providerProps });
-    act(() => {
-      userEvent.click(screen.getByRole('button', { name: 'Accept' }));
-    });
+    userEvent.click(screen.getByRole('button', { name: 'Accept' }));
     expect(onAcceptMock).toHaveBeenCalledWith(0);
     expect(mockNavigate).toHaveBeenCalledWith(RESULTS);
   });

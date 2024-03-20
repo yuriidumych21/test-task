@@ -8,7 +8,6 @@ import FormComp from './Form';
 import { useNavigate } from 'react-router-dom';
 import { images, CHOISE } from '../../contants';
 import * as ApiModule from '../../api';
-import { act } from 'react-dom/test-utils';
 
 const mockNavigate = jest.fn();
 
@@ -46,30 +45,24 @@ describe('Form Component', () => {
 
   it('should display validation errors for empty fields after submission', async () => {
     renderWithProviders(<FormComp />, { providerProps });
-    act(() => {
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
-    });
+    userEvent.click(screen.getByRole('button', { name: 'Submit' }));
     expect(await screen.findAllByText(/required/i)).toHaveLength(3);
   });
 
-  it('should show custom topic field when "Other" is selected', async () => {
+  it('should show custom topic field when "Other" is selected', () => {
     renderWithProviders(<FormComp />, { providerProps });
-    act(() => {
-      userEvent.selectOptions(screen.getByLabelText('Topic select'), 'Other');
-    });
+    userEvent.selectOptions(screen.getByLabelText('Topic select'), 'Other');
     expect(screen.getByPlaceholderText(/enter your topic/i)).toBeInTheDocument();
   });
 
   it('submits the form correctly and navigates', async () => {
     renderWithProviders(<FormComp />, { providerProps });
-    act(() => {
-      // Fill in the form fields
-      userEvent.type(screen.getByPlaceholderText('Name'), 'John');
-      userEvent.type(screen.getByPlaceholderText('Surname'), 'Doe');
-      userEvent.selectOptions(screen.getByLabelText('Topic select'), 'Travel');
-      // Submit the form
-      userEvent.click(screen.getByRole('button', { name: 'Submit' }));
-    });
+    // Fill in the form fields
+    userEvent.type(screen.getByPlaceholderText('Name'), 'John');
+    userEvent.type(screen.getByPlaceholderText('Surname'), 'Doe');
+    userEvent.selectOptions(screen.getByLabelText('Topic select'), 'Travel');
+    // Submit the form
+    userEvent.click(screen.getByRole('button', { name: 'Submit' }));
 
     // Wait for the API call and navigation to occur
     await waitFor(() => {
